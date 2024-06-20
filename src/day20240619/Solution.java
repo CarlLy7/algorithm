@@ -1,7 +1,6 @@
 package day20240619;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @description:
@@ -98,5 +97,52 @@ public class Solution {
             }
         }
         return n + 1;
+    }
+
+    //单例模式
+//    class Singleton {
+//        private static volatile Singleton singleton = null;
+//
+//        private Singleton() {
+//
+//        }
+//
+//        public Singleton getInstance() {
+//            if (singleton == null) {
+//                synchronized (Singleton.class) {
+//                    if (singleton == null) {
+//                        singleton = new Singleton();
+//                    }
+//                }
+//            }
+//            return singleton;
+//        }
+//    }
+
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        // int[]中存储的是nums1[i],nums2[i],nums2中的索引位置
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return (o1[0] + o1[1]) - (o2[0] + o2[1]);
+            }
+        });
+        for (int i = 0; i < nums1.length; i++) {
+            queue.offer(new int[]{nums1[i], nums2[0], 0});
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        while (!queue.isEmpty() && k > 0) {
+            int[] cur = queue.poll();
+            k--;
+            int nextIndex = cur[2] + 1;
+            if (nextIndex < nums2.length) {
+                queue.offer(new int[]{cur[0], nums2[nextIndex], nextIndex});
+            }
+            List<Integer> ans = new ArrayList<>();
+            ans.add(cur[0]);
+            ans.add(cur[1]);
+            res.add(ans);
+        }
+        return res;
     }
 }
