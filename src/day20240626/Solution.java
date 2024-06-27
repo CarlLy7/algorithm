@@ -161,4 +161,73 @@ public class Solution {
         traverse(root.left);
         traverse(root.right);
     }
+
+    public int[] corpFlightBookings(int[][] bookings, int n) {
+        int[] diff = new int[n];
+        int[] res = new int[n];
+        if (bookings.length > 0) {
+            for (int[] booking : bookings) {
+                int start = booking[0];
+                int end = booking[1];
+                int val = booking[2];
+                if (start < n) {
+                    diff[start] += val;
+                }
+                if (end + 1 < n) {
+                    diff[end + 1] -= val;
+                }
+            }
+        }
+        res[0] = diff[0];
+        for (int i = 1; i < n; i++) {
+            res[i] = res[i - 1] + diff[i];
+        }
+        return res;
+    }
+
+    public boolean carPooling(int[][] trips, int capacity) {
+        int[] diff = new int[1001];
+        int[] res = new int[diff.length];
+        for (int[] trip : trips) {
+            int num = trip[0];
+            int start = trip[1];
+            // 因为trip[2]中存放的是终点，到这里的时候已经下车了
+            int end = trip[2] - 1;
+            diff[start] += num;
+            if (end + 1 < diff.length) {
+                diff[end + 1] -= num;
+            }
+        }
+        res[0] = diff[0];
+        for (int i = 1; i < diff.length; i++) {
+            int val = res[i - 1] + diff[i];
+            res[i] = val;
+        }
+        for (int i = 0; i < res.length; i++) {
+            if (res[i] > capacity) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public class Singleton {
+        private static volatile Singleton uniqueInstance;
+
+        public Singleton() {
+
+        }
+
+        public static Singleton getUniqueInstance() {
+            if (uniqueInstance == null) {
+                synchronized (Singleton.class) {
+                    if (uniqueInstance == null) {
+                        uniqueInstance = new Singleton();
+                    }
+                }
+            }
+            return uniqueInstance;
+        }
+    }
+
 }
