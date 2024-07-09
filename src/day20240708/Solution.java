@@ -3,7 +3,6 @@ package day20240708;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * @description:
@@ -123,50 +122,50 @@ public class Solution {
 //        return count == numCourses;
 //    }
 
-    private List<Integer>[] build(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = new List[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            graph[i] = new ArrayList<>();
-        }
-        for (int[] prerequisite : prerequisites) {
-            int from = prerequisite[1];
-            int to = prerequisite[0];
-            graph[from].add(to);
-        }
-        return graph;
-    }
-
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = build(numCourses, prerequisites);
-        int[] indegree = new int[numCourses];
-        for (int[] prerequisite : prerequisites) {
-            int to = prerequisite[0];
-            indegree[to]++;
-        }
-        int count = 0;
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
-            }
-        }
-        int[] res = new int[numCourses];
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            res[count] = cur;
-            count++;
-            for (int next : graph[cur]) {
-                indegree[next]--;
-                if (indegree[next] == 0) {
-                    queue.offer(next);
-                }
-            }
-        }
-        if (count != numCourses) {
-            return new int[]{};
-        }
-        return res;
-    }
+//    private List<Integer>[] build(int numCourses, int[][] prerequisites) {
+//        List<Integer>[] graph = new List[numCourses];
+//        for (int i = 0; i < numCourses; i++) {
+//            graph[i] = new ArrayList<>();
+//        }
+//        for (int[] prerequisite : prerequisites) {
+//            int from = prerequisite[1];
+//            int to = prerequisite[0];
+//            graph[from].add(to);
+//        }
+//        return graph;
+//    }
+//
+//    public int[] findOrder(int numCourses, int[][] prerequisites) {
+//        List<Integer>[] graph = build(numCourses, prerequisites);
+//        int[] indegree = new int[numCourses];
+//        for (int[] prerequisite : prerequisites) {
+//            int to = prerequisite[0];
+//            indegree[to]++;
+//        }
+//        int count = 0;
+//        Queue<Integer> queue = new LinkedList<>();
+//        for (int i = 0; i < numCourses; i++) {
+//            if (indegree[i] == 0) {
+//                queue.offer(i);
+//            }
+//        }
+//        int[] res = new int[numCourses];
+//        while (!queue.isEmpty()) {
+//            int cur = queue.poll();
+//            res[count] = cur;
+//            count++;
+//            for (int next : graph[cur]) {
+//                indegree[next]--;
+//                if (indegree[next] == 0) {
+//                    queue.offer(next);
+//                }
+//            }
+//        }
+//        if (count != numCourses) {
+//            return new int[]{};
+//        }
+//        return res;
+//    }
 
 //    List<List<String>> res = new ArrayList<>();
 //
@@ -251,45 +250,45 @@ public class Solution {
 //        return true;
 //    }
 
-    boolean found = false;
-
-    public boolean exist(char[][] board, String word) {
-        int m = board.length;
-        int n = board[0].length;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                dfs(board, i, j, word, 0);
-                if (found) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void dfs(char[][] board, int i, int j, String word, int start) {
-        if (start == word.length()) {
-            found = true;
-            return;
-        }
-        if (found) {
-            return;
-        }
-        int m = board.length;
-        int n = board[0].length;
-        if (i < 0 || j < 0 || i >= m || j >= n) {
-            return;
-        }
-        if (board[i][j] != word.charAt(start)) {
-            return;
-        }
-        board[i][j] = (char) -board[i][j];
-        dfs(board, i - 1, j, word, start + 1);
-        dfs(board, i + 1, j, word, start + 1);
-        dfs(board, i, j - 1, word, start + 1);
-        dfs(board, i, j + 1, word, start + 1);
-        board[i][j] = (char) -board[i][j];
-    }
+//    boolean found = false;
+//
+//    public boolean exist(char[][] board, String word) {
+//        int m = board.length;
+//        int n = board[0].length;
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                dfs(board, i, j, word, 0);
+//                if (found) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private void dfs(char[][] board, int i, int j, String word, int start) {
+//        if (start == word.length()) {
+//            found = true;
+//            return;
+//        }
+//        if (found) {
+//            return;
+//        }
+//        int m = board.length;
+//        int n = board[0].length;
+//        if (i < 0 || j < 0 || i >= m || j >= n) {
+//            return;
+//        }
+//        if (board[i][j] != word.charAt(start)) {
+//            return;
+//        }
+//        board[i][j] = (char) -board[i][j];
+//        dfs(board, i - 1, j, word, start + 1);
+//        dfs(board, i + 1, j, word, start + 1);
+//        dfs(board, i, j - 1, word, start + 1);
+//        dfs(board, i, j + 1, word, start + 1);
+//        board[i][j] = (char) -board[i][j];
+//    }
 
 
 //    List<String> res = new ArrayList<>();
@@ -327,30 +326,66 @@ public class Solution {
 
 
     // 无重可复选组合问题
-    List<List<Integer>> res = new ArrayList<>();
-    LinkedList<Integer> track = new LinkedList<>();
+//    List<List<Integer>> res = new ArrayList<>();
+//    LinkedList<Integer> track = new LinkedList<>();
+//
+//    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+//        backTrack(candidates, target, 0, 0);
+//        return res;
+//    }
+//
+//    private void backTrack(int[] candidates, int target, int start, int sum) {
+//        if (sum == target) {
+//            res.add(new ArrayList<>(track));
+//            return;
+//        }
+//        if (sum > target) {
+//            return;
+//        }
+//        for (int i = start; i < candidates.length; i++) {
+//            sum += candidates[i];
+//            track.addLast(candidates[i]);
+//            backTrack(candidates, target, i, sum);
+//            sum -= candidates[i];
+//            track.removeLast();
+//
+//        }
+//    }
 
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        backTrack(candidates, target, 0, 0);
+    List<List<String>> res = new ArrayList<>();
+    LinkedList<String> track = new LinkedList<>();
+
+    public List<List<String>> partition(String s) {
+        backTrack(s, 0);
         return res;
     }
 
-    private void backTrack(int[] candidates, int target, int start, int sum) {
-        if (sum == target) {
+
+    private void backTrack(String s, int start) {
+        if (start == s.length()) {
             res.add(new ArrayList<>(track));
             return;
         }
-        if (sum > target) {
-            return;
-        }
-        for (int i = start; i < candidates.length; i++) {
-            sum += candidates[i];
-            track.addLast(candidates[i]);
-            backTrack(candidates, target, i, sum);
-            sum -= candidates[i];
+        for (int i = start; i < s.length(); i++) {
+            if (!isValid(s, start, i)) {
+                continue;
+            }
+            track.addLast(s.substring(start, i + 1));
+            backTrack(s, i + 1);
             track.removeLast();
-
         }
+    }
+
+    // 判断是不是回文串
+    private boolean isValid(String s, int low, int hi) {
+        while (low < hi) {
+            if (s.charAt(low) != s.charAt(hi)) {
+                return false;
+            }
+            low++;
+            hi--;
+        }
+        return true;
     }
 
 }
