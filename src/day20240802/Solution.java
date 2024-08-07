@@ -235,23 +235,23 @@ public class Solution {
 
 
     //[3,2,1,5,6,4] k=2  1 2 3 4 5 6  6-2=4
-    public int findKthLargest(int[] nums, int k) {
-        shuffle(nums);
-        int n = nums.length;
-        int lo = 0, hi = n - 1;
-        k = n - k;
-        while (lo <= hi) {
-            int point = partation(nums, lo, hi);
-            if (point < k) {
-                lo = point + 1;
-            } else if (point > k) {
-                hi = point - 1;
-            } else {
-                return nums[point];
-            }
-        }
-        return -1;
-    }
+//    public int findKthLargest(int[] nums, int k) {
+//        shuffle(nums);
+//        int n = nums.length;
+//        int lo = 0, hi = n - 1;
+//        k = n - k;
+//        while (lo <= hi) {
+//            int point = partation(nums, lo, hi);
+//            if (point < k) {
+//                lo = point + 1;
+//            } else if (point > k) {
+//                hi = point - 1;
+//            } else {
+//                return nums[point];
+//            }
+//        }
+//        return -1;
+//    }
 
     private int partation(int[] nums, int lo, int hi) {
         int p = nums[lo];
