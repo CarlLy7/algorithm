@@ -153,4 +153,27 @@ public class day20241112Solution {
         }
         return a;
     }
+
+    // 222
+    // 计算一棵树的节点个数【时间复杂度为O(logN*logN)】
+    public int countNodes(TreeNode root) {
+        TreeNode l = root, r = root;
+        int hl = 0, hr = 0;
+        if (root == null) {
+            return 0;
+        }
+        while (l != null) {
+            l = l.left;
+            hl++;
+        }
+        while (r != null) {
+            r = r.right;
+            hr++;
+        }
+        // 满二叉树
+        if (hl == hr) {
+            return (int) Math.pow(2, hl) - 1;
+        }
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
 }
