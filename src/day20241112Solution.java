@@ -1,3 +1,7 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author: carl
  * @date: 2024/11/12
@@ -156,24 +160,63 @@ public class day20241112Solution {
 
     // 222
     // 计算一棵树的节点个数【时间复杂度为O(logN*logN)】
-    public int countNodes(TreeNode root) {
-        TreeNode l = root, r = root;
-        int hl = 0, hr = 0;
-        if (root == null) {
-            return 0;
+//    public int countNodes(TreeNode root) {
+//        TreeNode l = root, r = root;
+//        int hl = 0, hr = 0;
+//        if (root == null) {
+//            return 0;
+//        }
+//        while (l != null) {
+//            l = l.left;
+//            hl++;
+//        }
+//        while (r != null) {
+//            r = r.right;
+//            hr++;
+//        }
+//        // 满二叉树
+//        if (hl == hr) {
+//            return (int) Math.pow(2, hl) - 1;
+//        }
+//        return 1 + countNodes(root.left) + countNodes(root.right);
+//    }
+    //341
+
+    public interface NestedInteger {
+
+        // @return true if this NestedInteger holds a single integer, rather than a nested list.
+        public boolean isInteger();
+
+        // @return the single integer that this NestedInteger holds, if it holds a single integer
+        // Return null if this NestedInteger holds a nested list
+        public Integer getInteger();
+
+        // @return the nested list that this NestedInteger holds, if it holds a nested list
+        // Return empty list if this NestedInteger holds a single integer
+        public List<NestedInteger> getList();
+    }
+
+    public class NestedIterator implements Iterator<Integer> {
+        private LinkedList<NestedInteger> lists;
+
+        public NestedIterator(List<NestedInteger> nestedList) {
+            lists = new LinkedList<>(nestedList);
         }
-        while (l != null) {
-            l = l.left;
-            hl++;
+
+        @Override
+        public Integer next() {
+            return lists.remove(0).getInteger();
         }
-        while (r != null) {
-            r = r.right;
-            hr++;
+
+        @Override
+        public boolean hasNext() {
+            while (!lists.isEmpty() && !lists.get(0).isInteger()) {
+                List<NestedInteger> nestedIntegerList = lists.remove(0).getList();
+                for (int i = nestedIntegerList.size() - 1; i >= 0; i--) {
+                    lists.addFirst(nestedIntegerList.get(i));
+                }
+            }
+            return !lists.isEmpty();
         }
-        // 满二叉树
-        if (hl == hr) {
-            return (int) Math.pow(2, hl) - 1;
-        }
-        return 1 + countNodes(root.left) + countNodes(root.right);
     }
 }
