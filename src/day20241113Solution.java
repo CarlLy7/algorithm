@@ -1,4 +1,4 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @author: carl
@@ -174,4 +174,196 @@ public class day20241113Solution {
         return a;
     }
 
+    //82
+    //迭代方法
+//    public ListNode deleteDuplicates(ListNode head) {
+//        ListNode dummy = new ListNode(-1);
+//        ListNode p = dummy, q = head;
+//        while (q != null) {
+//            if (q.next != null && q.val == q.next.val) {
+//                while (q.next != null && q.val == q.next.val) {
+//                    q = q.next;
+//                }
+//                q = q.next;
+//                if (q == null) {
+//                    p.next = null;
+//                }
+//            } else {
+//                p.next = q;
+//                p = p.next;
+//                q = q.next;
+//            }
+//        }
+//        return dummy.next;
+//    }
+
+    // 递归方法
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        if (head.val != head.next.val) {
+            head.next = deleteDuplicates(head.next);
+            return head;
+        }
+        while (head.next != null && head.val == head.next.val) {
+            head = head.next;
+        }
+        return deleteDuplicates(head.next);
+    }
+
+    //1836
+    public ListNode deleteDuplicatesUnsorted(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode p = dummy;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        ListNode q = head;
+        while (q != null) {
+            map.put(q.val, map.getOrDefault(q.val, 0) + 1);
+            q = q.next;
+        }
+        while (p != null) {
+            ListNode node = p.next;
+            while (node != null && map.get(node.val) > 1) {
+                node = node.next;
+            }
+            p.next = node;
+            p = p.next;
+        }
+        return dummy.next;
+    }
+
+    //264
+    public int nthUglyNumber(int n) {
+        // 三个链表上的指针
+        int p2 = 1, p3 = 1, p5 = 1;
+        // 三个链表
+        int product2 = 1, product3 = 1, product5 = 1;
+        // 最终的链表
+        int[] ugly = new int[n + 1];
+        // 最终链表上的指针
+        int p = 1;
+        while (p <= n) {
+            int min = Math.min(Math.min(product2, product3), product5);
+            ugly[p] = min;
+            p++;
+            if (min == product2) {
+                product2 = ugly[p2] * 2;
+                p2++;
+            }
+            if (min == product3) {
+                product3 = 3 * ugly[p3];
+                p3++;
+            }
+            if (min == product5) {
+                product5 = 5 * ugly[p5];
+                p5++;
+            }
+        }
+        return ugly[n];
+    }
+
+    //378
+    public int kthSmallest(int[][] matrix, int k) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
+            return a[0] - b[0];
+        });
+        for (int i = 0; i < matrix.length; i++) {
+            queue.offer(new int[]{matrix[i][0], i, 0});
+        }
+        int res = -1;
+        while (!queue.isEmpty() && k > 0) {
+            int[] node = queue.poll();
+            res = node[0];
+            int i = node[1];
+            int j = node[2];
+            k--;
+            if (j + 1 < matrix[i].length) {
+                queue.offer(new int[]{matrix[i][j + 1], i, j + 1});
+            }
+        }
+        return res;
+    }
+
+    //373
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
+            return (a[0] + a[1]) - (b[0] + b[1]);
+        });
+        for (int i = 0; i < nums1.length; i++) {
+            queue.offer(new int[]{nums1[i], nums2[0], 0});
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        while (!queue.isEmpty() && k > 0) {
+            int[] cur = queue.poll();
+            k--;
+            int nextIndex = cur[2] + 1;
+            List<Integer> pair = new ArrayList<>();
+            pair.add(cur[0]);
+            pair.add(cur[1]);
+            res.add(pair);
+            if (nextIndex < nums2.length) {
+                queue.offer(new int[]{cur[0], nums2[nextIndex], nextIndex});
+            }
+        }
+        return res;
+    }
+
+    //2
+//    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+//        ListNode p1 = l1, p2 = l2;
+//        int carry = 0;
+//        ListNode dummy = new ListNode(-1);
+//        ListNode p = dummy;
+//        while (p1 != null || p2 != null || carry > 0) {
+//            int val = carry;
+//            if (p1 != null) {
+//                val += p1.val;
+//                p1 = p1.next;
+//            }
+//            if (p2 != null) {
+//                val += p2.val;
+//                p2 = p2.next;
+//            }
+//            carry = val / 10;
+//            val = val % 10;
+//            p.next = new ListNode(val);
+//            p = p.next;
+//        }
+//        return dummy.next;
+//    }
+
+    //445
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode p1 = l1;
+        ListNode p2 = l2;
+        ListNode dummy = new ListNode(-1);
+        Stack<Integer> stack1 = new Stack<>();
+        while (p1 != null) {
+            stack1.push(p1.val);
+            p1 = p1.next;
+        }
+        Stack<Integer> stack2 = new Stack<>();
+        while (p2 != null) {
+            stack2.push(p2.val);
+            p2 = p2.next;
+        }
+        int carry = 0;
+        while (!stack1.isEmpty() || !stack2.isEmpty() || carry > 0) {
+            int val = carry;
+            if (!stack1.isEmpty()) {
+                val += stack1.pop();
+            }
+            if (!stack2.isEmpty()) {
+                val += stack2.pop();
+            }
+            carry = carry / 10;
+            val = val % 10;
+            ListNode newNode = new ListNode(val);
+            newNode.next = dummy.next;
+            dummy.next = newNode;
+        }
+        return dummy.next;
+    }
 }
