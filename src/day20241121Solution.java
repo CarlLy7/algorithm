@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,27 +9,27 @@ import java.util.List;
 
 public class day20241121Solution {
     //566
-    public int[][] matrixReshape(int[][] matrix, int r, int c) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        if (m * n != r * c) {
-            return matrix;
-        }
-        int[][] res = new int[r][c];
-        for (int i = 0; i < m * n; i++) {
-            set(res, i, get(matrix, i));
-        }
-        return res;
-    }
-
-    private void set(int[][] matrix, int index, int val) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int i = index / n;
-        int j = index % n;
-        matrix[i][j] = val;
-    }
-
+//    public int[][] matrixReshape(int[][] matrix, int r, int c) {
+//        int m = matrix.length;
+//        int n = matrix[0].length;
+//        if (m * n != r * c) {
+//            return matrix;
+//        }
+//        int[][] res = new int[r][c];
+//        for (int i = 0; i < m * n; i++) {
+//            set(res, i, get(matrix, i));
+//        }
+//        return res;
+//    }
+//
+//    private void set(int[][] matrix, int index, int val) {
+//        int m = matrix.length;
+//        int n = matrix[0].length;
+//        int i = index / n;
+//        int j = index % n;
+//        matrix[i][j] = val;
+//    }
+//
     private int get(int[][] matrix, int index) {
         int m = matrix.length;
         int n = matrix[0].length;
@@ -87,55 +88,55 @@ public class day20241121Solution {
     }
 
     //792
-//    public int numMatchingSubseq(String s, String[] words) {
-//        // 记录每一个字母出现的索引位置
-//        ArrayList<Integer>[] charArrays = new ArrayList[256];
-//        for (int i = 0; i < s.length(); i++) {
-//            char c = s.charAt(i);
-//            if (charArrays[c] == null) {
-//                charArrays[c] = new ArrayList<>();
-//            }
-//            charArrays[c].add(i);
-//        }
-//        int res = 0;
-//        for (String word : words) {
-//            // s上的指针
-//            int i = 0;
-//            // word上的指针
-//            int j = 0;
-//            while (j < word.length()) {
-//                char c = word.charAt(j);
-//                if (charArrays[c].size() == 0) {
-//                    break;
-//                }
-//                int pos = leftBound(charArrays[c], i);
-//                if (pos == charArrays[c].size()) {
-//                    break;
-//                }
-//                j = charArrays[c].get(pos);
-//                i++;
-//                j++;
-//                if (j == word.length()) {
-//                    res++;
-//                }
-//            }
-//        }
-//        return res;
-//    }
+    public int numMatchingSubseq(String s, String[] words) {
+        // 记录每一个字母出现的索引位置
+        ArrayList<Integer>[] charArrays = new ArrayList[256];
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (charArrays[c] == null) {
+                charArrays[c] = new ArrayList<>();
+            }
+            charArrays[c].add(i);
+        }
+        int res = 0;
+        for (String word : words) {
+            // s上的指针
+            int i = 0;
+            // word上的指针
+            int j = 0;
+            while (j < word.length()) {
+                char c = word.charAt(j);
+                if (charArrays[c] == null) {
+                    break;
+                }
+                int pos = leftBound(charArrays[c], i);
+                if (pos == charArrays[c].size()) {
+                    break;
+                }
+                i = charArrays[c].get(pos);
+                i++;
+                j++;
+                if (j == word.length()) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
 
 
-//    private int leftBound(ArrayList<Integer> arrayList, int target) {
-//        int left = 0, right = arrayList.size();
-//        while (left < right) {
-//            int mid = left + (right - left) / 2;
-//            if (arrayList.get(mid) < target) {
-//                left = mid + 1;
-//            } else {
-//                right = mid;
-//            }
-//        }
-//        return left;
-//    }
+    private int leftBound(ArrayList<Integer> arrayList, int target) {
+        int left = 0, right = arrayList.size();
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arrayList.get(mid) < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 
     //658
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
@@ -160,21 +161,6 @@ public class day20241121Solution {
         return res;
     }
 
-    private int leftBound(int[] arr, int target) {
-        int left = 0, right = arr.length;
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (arr[mid] >= target) {
-                right = mid;
-            } else if (arr[mid] < target) {
-                left = mid + 1;
-            }
-        }
-        if (left >= arr.length || arr[left] != target) {
-            return -1;
-        }
-        return left;
-    }
 
     //35
     public int searchInsert(int[] nums, int target) {
@@ -193,22 +179,6 @@ public class day20241121Solution {
     //162
     public int findPeakElement(int[] nums) {
         int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] > nums[mid + 1]) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
-    }
-
-    //852
-    // 0 10 5 2   1
-    // 0 2 1 0   1
-    public int peakIndexInMountainArray(int[] nums) {
-        int left = 0, right = nums.length;
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] > nums[mid + 1]) {
@@ -220,27 +190,52 @@ public class day20241121Solution {
         return left;
     }
 
-    public int search(int[] nums, int target) {
+    //852
+    // 0 10 5 2   1
+    // 0 2 1 0   1
+    public int peakIndexInMountainArray(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > nums[mid + 1]) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    //LCR 172. 统计目标成绩的出现次数
+    public int countTarget(int[] nums, int target) {
         int leftIndex = leftBound(nums, target);
         int rightIndex = rightBound(nums, target);
         return rightIndex - leftIndex + 1;
     }
 
     private int rightBound(int[] nums, int target) {
-        int left = 0, right = nums.length-1;
+        int left = 0, right = nums.length;
         while (left < right) {
-            int mid=left+(right-left)/2;
-            if (nums[mid]==target){
-                left=mid+1;
-            }else if (nums[mid]>target){
-                right=mid;
-            }else{
-                left=mid+1;
+            int mid = left + (right - left) / 2;
+            if (nums[mid] <= target) {
+                left = mid + 1;
+            } else {
+                right = mid;
             }
         }
-        if (right<0 || nums[right]!=target){
-            return -1;
+        return left - 1;
+    }
+
+    private int leftBound(int[] arr, int target) {
+        int left = 0, right = arr.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
         }
-        return right;
+        return left;
     }
 }
