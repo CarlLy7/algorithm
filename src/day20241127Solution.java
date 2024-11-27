@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author: luanyingqi
@@ -127,4 +130,35 @@ public class day20241127Solution {
         }
         return res;
     }
+
+    //46
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        boolean[] visited = new boolean[nums.length];
+        backTrack(nums, track, res, visited);
+        return res;
+    }
+
+    private void backTrack(int[] nums, LinkedList<Integer> track, List<List<Integer>> res, boolean[] visited) {
+        //base case
+        if (track.size() == nums.length) {
+            res.add(new ArrayList<>(track));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            //做选择
+            track.addLast(nums[i]);
+            visited[i] = true;
+            backTrack(nums, track, res, visited);
+            track.removeLast();
+            visited[i] = false;
+        }
+    }
+
+    //
+
 }
