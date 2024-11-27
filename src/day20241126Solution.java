@@ -43,9 +43,6 @@ public class day20241126Solution {
         }
     }
 
-    //1314
-
-
     //724
     public int pivotIndex(int[] nums) {
         int n = nums.length;
