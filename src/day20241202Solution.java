@@ -70,7 +70,7 @@ public class day20241202Solution {
             return memo[i][j];
         }
         if (s1.charAt(i) == s2.charAt(j)) {
-            memo[i][j] = dp(s1, i + 1, s2, j + 1, memo);
+            memo[i][j] = dpTwo(s1, i + 1, s2, j + 1, memo);
         } else {
             memo[i][j] = Math.min(s1.charAt(i) + dpTwo(s1, i + 1, s2, j, memo), s2.charAt(j) + dpTwo(s1, i, s2, j + 1, memo));
         }

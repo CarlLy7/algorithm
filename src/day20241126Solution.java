@@ -12,7 +12,7 @@ public class day20241126Solution {
         int[] preSum;
 
         public NumArray(int[] nums) {
-            preSum = new int[nums.length];
+            preSum = new int[nums.length + 1];
             for (int i = 1; i < nums.length; i++) {
                 preSum[i] = preSum[i - 1] + nums[i - 1];
             }

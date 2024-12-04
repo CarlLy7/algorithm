@@ -96,7 +96,7 @@ public class day20241125Solution {
         int left = 0, right = 0;
         int[] window = new int[26];
         // 窗口中出现字符出现最多的次数
-        int windowMax = 0;
+        int windowMax = Integer.MIN_VALUE;
         int res = 0;
         while (right < s.length()) {
             char c = s.charAt(right);
@@ -106,6 +106,7 @@ public class day20241125Solution {
             while (right - left - windowMax > k) {
                 char d = s.charAt(left);
                 left++;
+                window[d - 'A']--;
                 // 不需要更新windowMax,因为只有windowMax变大的时候，才有可能小于k,收缩窗口的时候不可能变大的
             }
             res = Math.max(res, right - left);
@@ -175,8 +176,8 @@ public class day20241125Solution {
     }
 
     //395
-    public int longestSubString(String s, int k) {
-        int res = Integer.MIN_VALUE;
+    public int longestSubstring(String s, int k) {
+        int res = 0;
         for (int i = 1; i <= 26; i++) {
             res = Math.max(res, longestKLetterSubStr(s, k, i));
         }
@@ -185,14 +186,14 @@ public class day20241125Solution {
 
     // s中有count种不同的字符，并且每个字符出现的次数大于等于k,最长字串的长度
     public int longestKLetterSubStr(String s, int k, int count) {
+        int res = 0;
         int left = 0, right = 0;
         // 记录每种字符出现的次数
         int[] window = new int[26];
         // 窗口内不同的字符个数
         int windowCount = 0;
         //符合要求的字符的个数
-        int windowValid = 0;
-        int res = 0;
+        int valid = 0;
         while (right < s.length()) {
             char c = s.charAt(right);
             if (window[c - 'a'] == 0) {
@@ -200,14 +201,14 @@ public class day20241125Solution {
             }
             window[c - 'a']++;
             if (window[c - 'a'] == k) {
-                windowValid++;
+                valid++;
             }
             right++;
             // 超过种类了，收缩窗口
             while (windowCount > count) {
                 char d = s.charAt(left);
                 if (window[d - 'a'] == k) {
-                    windowValid--;
+                    valid--;
                 }
                 window[d - 'a']--;
                 if (window[d - 'a'] == 0) {
@@ -215,7 +216,7 @@ public class day20241125Solution {
                 }
                 left++;
             }
-            if (windowCount == count) {
+            if (valid == count) {
                 res = Math.max(res, right - left);
             }
         }

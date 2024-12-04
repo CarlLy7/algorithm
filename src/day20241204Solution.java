@@ -74,7 +74,7 @@ public class day20241204Solution {
 //    LinkedList<Integer> track = new LinkedList<>();
 //    boolean[] used;
 //
-//    public List<List<Integer>> premuteUnique(int[] nums) {
+//    public List<List<Integer>> permuteUnique(int[] nums) {
 //        used = new boolean[nums.length];
 //        Arrays.sort(nums);
 //        backTrack(nums);
@@ -180,7 +180,7 @@ public class day20241204Solution {
 //    LinkedList<Integer> track = new LinkedList<>();
 //    boolean[] used;
 //
-//    public List<List<Integer>> premute(int[] nums) {
+//    public List<List<Integer>> permute(int[] nums) {
 //        used = new boolean[nums.length];
 //        backTrack(nums);
 //        return res;
