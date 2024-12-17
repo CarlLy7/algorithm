@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,50 +11,53 @@ import java.util.List;
 public class day20241212Solution {
 
     //93
-//    List<String> res = new ArrayList<>();
-//    LinkedList<String> track = new LinkedList<>();
-//
-//    public List<String> restoreIpAddresses(String s) {
-//        backTrack(s, 0);
-//        return res;
-//    }
-//
-//    private void backTrack(String s, int start) {
-//        // base case
-//        if (track.size() == 4 && start == s.length()) {
-//            res.add(String.join(",", track));
-//            return;
-//        }
-//        for (int i = start; i < s.length(); i++) {
-//            if (track.size()>=4){
-//                break;
-//            }
-//            if (!isValid(s,start,i)){
-//                continue;
-//            }
-//            track.addLast(s.substring(start,i+1));
-//            backTrack(s,i+1);
-//            track.removeLast();
-//        }
-//    }
-//
-//    private boolean isValid(String s, int start, int end) {
-//        int len = end - start + 1;
-//        if (len == 1) {
-//            return true;
-//        }
-//        if (s.charAt(start) == '0') {
-//            return false;
-//        }
-//        if (len <= 2) {
-//            return true;
-//        }
-//        if (Integer.parseInt(s.substring(start, start + len)) > 255) {
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
+    List<String> res = new ArrayList<>();
+    LinkedList<String> track = new LinkedList<>();
+
+    public List<String> restoreIpAddresses(String s) {
+        backTrack(s, 0);
+        return res;
+    }
+
+    private void backTrack(String s, int start) {
+        // base case
+        if (track.size() == 4 && start == s.length()) {
+            res.add(String.join(".", track));
+            return;
+        }
+        for (int i = start; i < s.length(); i++) {
+            if (track.size() >= 4) {
+                break;
+            }
+            if (!isValid(s, start, i)) {
+                continue;
+            }
+            track.addLast(s.substring(start, i + 1));
+            backTrack(s, i + 1);
+            track.removeLast();
+        }
+    }
+
+    private boolean isValid(String s, int start, int end) {
+        int len = end - start + 1;
+        if (len == 0 || len > 3) {
+            return false;
+        }
+        if (len == 1) {
+            return true;
+        }
+        if (s.charAt(start) == '0') {
+            return false;
+        }
+        if (len <= 2) {
+            return true;
+        }
+        if (Integer.parseInt(s.substring(start, end + 1)) > 255) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     //131
 //    List<List<String>> res = new ArrayList<>();
@@ -80,12 +84,12 @@ public class day20241212Solution {
 //    }
 //
 //    private boolean isPartition(String s, int start, int end) {
-//        while (start != end) {
-//            if (s.charAt(start) == s.charAt(end)) {
+//        while (start < end) {
+//            if (s.charAt(start) != s.charAt(end)) {
+//                return false;
+//            } else {
 //                start++;
 //                end--;
-//            } else {
-//                return false;
 //            }
 //        }
 //        return true;
@@ -101,6 +105,7 @@ public class day20241212Solution {
 //    }
 //
 //    private void backTrack(int[] nums, int start) {
+//        // base case
 //        if (track.size() >= 2) {
 //            res.add(new ArrayList<>(track));
 //            return;
@@ -116,7 +121,6 @@ public class day20241212Solution {
 //            used.add(nums[i]);
 //            track.addLast(nums[i]);
 //            backTrack(nums, i + 1);
-//            used.remove(nums[i]);
 //            track.removeLast();
 //        }
 //    }
@@ -137,17 +141,17 @@ public class day20241212Solution {
 //            ans += 1;
 //            return;
 //        }
-//        for (int i = 1; i <= n; i++) {
-//            if (used[index]) {
+//        for (int val = 1; val <= n; val++) {
+//            if (used[val]) {
 //                continue;
 //            }
-//            if (!(index % i == 0 || (i & index) == 0)) {
+//            if ((index % val != 0) && (val % index != 0)) {
 //                continue;
 //            }
-//            used[i] = true;
-//            track.addLast(i);
+//            used[val] = true;
+//            track.addLast(val);
 //            backTrack(n, index + 1);
-//            used[i] = false;
+//            used[val] = false;
 //            track.removeLast();
 //        }
 //    }
