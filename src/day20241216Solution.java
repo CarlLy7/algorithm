@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author: carl
@@ -48,8 +50,10 @@ public class day20241216Solution {
             }
             used |= 1 << i;
             bucket += nums[i];
-            backTrack(k, bucket, nums, i + 1, used, target);
-            used ^= (1 << i);
+            if (backTrack(k, bucket, nums, i + 1, used, target)) {
+                return true;
+            }
+            used ^= 1 << i;
             bucket -= nums[i];
         }
         return false;
@@ -104,25 +108,29 @@ public class day20241216Solution {
 
     //17
     // 路径，选择列表
-//    List<String> res=new ArrayList<>();
-//    StringBuilder track=new StringBuilder();
+//    List<String> res = new ArrayList<>();
+//    StringBuilder track = new StringBuilder();
+//
 //    public List<String> letterCombinations(String digits) {
-//        String[] mapping=new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-//        backTrack(digits,0,mapping);
+//        if (digits.length() == 0) {
+//            return res;
+//        }
+//        String[] mapping = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+//        backTrack(digits, 0, mapping);
 //        return res;
 //    }
 //
 //    private void backTrack(String digits, int start, String[] mapping) {
 //        // base case
-//        if (track.length()==digits.length()){
+//        if (track.length() == digits.length()) {
 //            res.add(track.toString());
 //            return;
 //        }
-//        int index=digits.charAt(start)-'0';
+//        int index = digits.charAt(start) - '0';
 //        for (char d : mapping[index].toCharArray()) {
 //            track.append(d);
-//            backTrack(digits,start+1,mapping);
-//            track.deleteCharAt(track.length()-1);
+//            backTrack(digits, start + 1, mapping);
+//            track.deleteCharAt(track.length() - 1);
 //        }
 //    }
 
