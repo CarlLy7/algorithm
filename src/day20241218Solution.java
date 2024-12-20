@@ -10,35 +10,37 @@ import java.util.List;
 
 public class day20241218Solution {
 
+
+
     //784
-    List<String> res = new ArrayList<>();
-    StringBuilder track = new StringBuilder();
-
-    public List<String> letterCasePermutation(String s) {
-        backTrack(s, 0);
-        return res;
-    }
-
-    private void backTrack(String s, int index) {
-        // base case
-        if (index == s.length()) {
-            res.add(track.toString());
-            return;
-        }
-        if ('0' <= s.charAt(index) && s.charAt(index) <= '9') {
-            track.append(s.charAt(index));
-            backTrack(s, index + 1);
-            track.deleteCharAt(track.length() - 1);
-        } else {
-            track.append(Character.toLowerCase(s.charAt(index)));
-            backTrack(s, index + 1);
-            track.deleteCharAt(track.length() - 1);
-
-            track.append(Character.toUpperCase(s.charAt(index)));
-            backTrack(s, index + 1);
-            track.deleteCharAt(track.length() - 1);
-        }
-    }
+//    List<String> res = new ArrayList<>();
+//    StringBuilder track = new StringBuilder();
+//
+//    public List<String> letterCasePermutation(String s) {
+//        backTrack(s, 0);
+//        return res;
+//    }
+//
+//    private void backTrack(String s, int index) {
+//        // base case
+//        if (index == s.length()) {
+//            res.add(track.toString());
+//            return;
+//        }
+//        if ('0' <= s.charAt(index) && s.charAt(index) <= '9') {
+//            track.append(s.charAt(index));
+//            backTrack(s, index + 1);
+//            track.deleteCharAt(track.length() - 1);
+//        } else {
+//            track.append(Character.toLowerCase(s.charAt(index)));
+//            backTrack(s, index + 1);
+//            track.deleteCharAt(track.length() - 1);
+//
+//            track.append(Character.toUpperCase(s.charAt(index)));
+//            backTrack(s, index + 1);
+//            track.deleteCharAt(track.length() - 1);
+//        }
+//    }
 
     //996
 //    int res = 0;
