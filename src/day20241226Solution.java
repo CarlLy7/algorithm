@@ -35,7 +35,7 @@ public class day20241226Solution {
 //    }
 //
 //    private int robRange(int[] nums, int start, int end) {
-//        int[] dp=new int[end+2];
+//        int[] dp=new int[end+3];
 //        for (int i = end; i >=start ; i--) {
 //            dp[i]=Math.max(dp[i+1],dp[i+2]+nums[i]);
 //        }
