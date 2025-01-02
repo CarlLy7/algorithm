@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: carl
@@ -29,7 +26,7 @@ public class day20250102Solution {
             int from = flight[0];
             int to = flight[1];
             int price = flight[2];
-            map.putIfAbsent(to, new ArrayList<>());
+            map.putIfAbsent(to, new LinkedList<>());
             map.get(to).add(new int[]{from, price});
         }
         return dp(dst, K);
@@ -46,12 +43,14 @@ public class day20250102Solution {
             return memo[s][k];
         }
         int res = Integer.MAX_VALUE;
-        for (int[] in : map.get(s)) {
-            int from = in[0];
-            int price = in[1];
-            int subProblem = dp(from, k - 1);
-            if (subProblem != -1) {
-                res = Math.min(res, subProblem + price);
+        if (map.containsKey(s)) {
+            for (int[] in : map.get(s)) {
+                int from = in[0];
+                int price = in[1];
+                int subProblem = dp(from, k - 1);
+                if (subProblem != -1) {
+                    res = Math.min(res, subProblem + price);
+                }
             }
         }
         memo[s][k] = res == Integer.MAX_VALUE ? -1 : res;
