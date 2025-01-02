@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class day20241231Solution {
 
     //10
-    int[][] memo;
+    private int[][] memo;
 
     public boolean isMatch(String s, String p) {
         int m = s.length();
@@ -35,6 +35,7 @@ public class day20241231Solution {
                     return false;
                 }
             }
+            return true;
         }
         if (memo[i][j] != -1) {
             return memo[i][j] == 1;
@@ -43,15 +44,17 @@ public class day20241231Solution {
         if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
             if (j < n - 1 && p.charAt(j + 1) == '*') {
                 // *匹配0个或者多个
-                res = dp(s, i, p, j + 2) | dp(s, i + 1, p, j);
+                res = dp(s, i, p, j + 2) || dp(s, i + 1, p, j);
             } else {
                 res = dp(s, i + 1, p, j + 1);
             }
         } else {
-            if (j < n - 1 && p.charAt(j + 1) != '*') {
-                return false;
+            if (j < n - 1 && p.charAt(j + 1) == '*') {
+                res = dp(s, i, p, j + 2);
+            } else {
+                res = false;
             }
-            res = dp(s, i, p, j + 2);
+
         }
         memo[i][j] = (res ? 1 : 0);
         return res;
