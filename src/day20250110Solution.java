@@ -23,19 +23,24 @@ public class day20250110Solution {
 
     //23
     public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        }
         ListNode dummy = new ListNode(-1);
         ListNode p = dummy;
         Queue<ListNode> queue = new PriorityQueue<>((a, b) -> {
             return a.val - b.val;
         });
         for (ListNode node : lists) {
-            queue.offer(node);
+            if (node != null) {
+                queue.offer(node);
+            }
         }
         while (!queue.isEmpty()) {
             ListNode curNode = queue.poll();
-            p.next=curNode;
-            p=p.next;
-            if (curNode.next!=null){
+            p.next = curNode;
+            p = p.next;
+            if (curNode.next != null) {
                 queue.offer(curNode.next);
             }
         }

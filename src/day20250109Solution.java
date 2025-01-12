@@ -36,8 +36,7 @@ public class day20250109Solution {
             res = Math.max(res, curArea);
             if (height[left] < height[right]) {
                 left++;
-            }
-            if (height[right] < height[left]) {
+            } else {
                 right--;
             }
         }
