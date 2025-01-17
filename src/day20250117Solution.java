@@ -10,34 +10,35 @@ import java.util.List;
 
 public class day20250117Solution {
 
-    //47
-    List<List<Integer>> res=new ArrayList<>();
-    LinkedList<Integer> track=new LinkedList<>();
+    // 47
+    List<List<Integer>> res = new ArrayList<>();
+    LinkedList<Integer> track = new LinkedList<>();
     boolean[] used;
-    public List<List<Integer>> permuteUnique(int[] nums){
-        used=new boolean[nums.length];
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        used = new boolean[nums.length];
         Arrays.sort(nums);
         backTrack(nums);
         return res;
     }
 
     private void backTrack(int[] nums) {
-        if (track.size()==nums.length){
+        if (track.size() == nums.length) {
             res.add(new ArrayList<>(track));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (i>0 && nums[i]==nums[i-1] && !used[i-1]){
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
                 continue;
             }
-            if (used[i]){
+            if (used[i]) {
                 continue;
             }
             track.addLast(nums[i]);
-            used[i]=true;
+            used[i] = true;
             backTrack(nums);
             track.removeLast();
-            used[i]=false;
+            used[i] = false;
         }
     }
 
