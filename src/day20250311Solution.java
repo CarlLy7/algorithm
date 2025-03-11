@@ -145,4 +145,44 @@ public class day20250311Solution {
         return res;
     }
 
+    // 127
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashSet validSet = new HashSet(wordList);
+        if (!validSet.contains(endWord)) {
+            return 0;
+        }
+        int step = 1;
+        Queue<String> queue = new LinkedList<>();
+        HashSet<String> visited = new HashSet<>();
+        queue.offer(beginWord);
+        visited.add(beginWord);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String curStr = queue.poll();
+                char[] chars = curStr.toCharArray();
+                for (int j = 0; j < curStr.length(); j++) {
+                    char orignChar = chars[j];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (chars[j] == c) {
+                            continue;
+                        }
+                        chars[j] = c;
+                        String newStr = new String(chars);
+                        if (validSet.contains(newStr) && !visited.contains(newStr)) {
+                            if (newStr == endWord) {
+                                return step + 1;
+                            }
+                            queue.offer(newStr);
+                            visited.add(newStr);
+                        }
+                    }
+                    chars[j] = orignChar;
+                }
+            }
+            step++;
+        }
+        return 0;
+    }
+
 }
