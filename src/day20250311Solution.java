@@ -15,11 +15,11 @@ public class day20250311Solution {
         Queue<int[]> queueP = new LinkedList<>();
         boolean[][] visitedP = new boolean[m][n];
         for (int i = 0; i < m; i++) {
-            queueP.offer(new int[] {i, 0});
+            queueP.offer(new int[]{i, 0});
             visitedP[i][0] = true;
         }
         for (int j = 0; j < n; j++) {
-            queueP.offer(new int[] {0, j});
+            queueP.offer(new int[]{0, j});
             visitedP[0][j] = true;
         }
         bfs(heights, queueP, visitedP);
@@ -27,17 +27,17 @@ public class day20250311Solution {
         Queue<int[]> queueA = new LinkedList<>();
         boolean[][] visitedA = new boolean[m][n];
         for (int i = 0; i < m; i++) {
-            queueP.offer(new int[] {i, n - 1});
-            visitedP[i][n - 1] = true;
+            queueA.offer(new int[]{i, n - 1});
+            visitedA[i][n - 1] = true;
         }
         for (int j = 0; j < n; j++) {
-            queueP.offer(new int[] {m - 1, j});
-            visitedP[m - 1][j] = true;
+            queueA.offer(new int[]{m - 1, j});
+            visitedA[m - 1][j] = true;
         }
         bfs(heights, queueA, visitedA);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (visitedP[i][j] == visitedA[i][j]) {
+                if (visitedP[i][j] && visitedA[i][j]) {
                     res.add(Arrays.asList(i, j));
                 }
             }
@@ -57,7 +57,7 @@ public class day20250311Solution {
                 if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || heights[x][y] < heights[cur[0]][cur[1]]) {
                     continue;
                 }
-                queue.offer(new int[] {x, y});
+                queue.offer(new int[]{x, y});
                 visited[x][y] = true;
             }
         }
@@ -67,8 +67,8 @@ public class day20250311Solution {
     public boolean canMeasureWater(int x, int y, int target) {
         Queue<int[]> queue = new LinkedList<>();
         HashSet<Long> visited = new HashSet<>();
-        queue.offer(new int[] {0, 0});
-        visited.add((long)0 * (0 + 1) + 0);
+        queue.offer(new int[]{0, 0});
+        visited.add(0L);
         while (!queue.isEmpty()) {
             int[] cur = queue.poll();
             if (cur[0] == target || cur[1] == target || cur[0] + cur[1] == target) {
@@ -77,17 +77,17 @@ public class day20250311Solution {
             // 穷举所有的可能结果
             List<int[]> nextStates = new LinkedList<>();
             // 把其中一桶灌满
-            nextStates.add(new int[] {x, cur[1]});
-            nextStates.add(new int[] {cur[0], y});
+            nextStates.add(new int[]{x, cur[1]});
+            nextStates.add(new int[]{cur[0], y});
             // 将其中一桶清空
-            nextStates.add(new int[] {0, cur[1]});
-            nextStates.add(new int[] {cur[0], 0});
+            nextStates.add(new int[]{0, cur[1]});
+            nextStates.add(new int[]{cur[0], 0});
             // 将其中一桶倒入另一桶，要么全倒进去，要么满了倒不进去了
-            nextStates.add(new int[] {cur[0] - Math.min(y - cur[1], cur[0]), cur[0] + Math.min(y - cur[1], cur[0])});
-            nextStates.add(new int[] {cur[0] + Math.min(x - cur[0], cur[1]), cur[1] - Math.min(x - cur[0], cur[1])});
+            nextStates.add(new int[]{cur[0] - Math.min(y - cur[1], cur[0]), cur[1] + Math.min(y - cur[1], cur[0])});
+            nextStates.add(new int[]{cur[0] + Math.min(x - cur[0], cur[1]), cur[1] - Math.min(x - cur[0], cur[1])});
 
             for (int[] nextState : nextStates) {
-                long hash = (long)nextState[0] * (y + 1) + nextState[1];
+                long hash = (long) nextState[0] * (y + 1) + nextState[1];
                 if (visited.contains(hash)) {
                     continue;
                 }
@@ -170,7 +170,7 @@ public class day20250311Solution {
                         chars[j] = c;
                         String newStr = new String(chars);
                         if (validSet.contains(newStr) && !visited.contains(newStr)) {
-                            if (newStr == endWord) {
+                            if (newStr.equals(endWord)) {
                                 return step + 1;
                             }
                             queue.offer(newStr);

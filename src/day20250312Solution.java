@@ -65,7 +65,7 @@ public class day20250312Solution {
                 }
                 weightMap.put(neighbor.node, weightMap.get(cur) * neighbor.weight);
                 if (neighbor.node.equals(end)) {
-                    return weightMap.get(neighbor);
+                    return weightMap.get(neighbor.node);
                 }
                 queue.offer(neighbor.node);
                 visited.add(neighbor.node);
