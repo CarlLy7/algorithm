@@ -11,32 +11,32 @@ import java.util.Queue;
 
 public class day20250106Solution {
 
-    public int[] dijkstra(int start, Graph graph) {
-        int V = graph.size();
-        int[] distTo = new int[V];
-        Arrays.fill(distTo, Integer.MAX_VALUE);
-        distTo[start] = 0;
-        Queue<State> queue = new PriorityQueue<>((a, b) -> {
-            return a.distFromStart - b.distFromStart;
-        });
-        queue.offer(new State(start,0));
-        while(!queue.isEmpty()){
-            State curState = queue.poll();
-            int curNodeId = curState.getNodeId();
-            int curDisFromStart = curState.getDistFromStart();
-            if (curDisFromStart>distTo[curNodeId]){
-                continue;
-            }
-            for (int nextNodeId: graph.neighbors(curNodeId)){
-                int distToNextNodeId=curDisFromStart+graph.weight(curNodeId,nextNodeId);
-                if (distToNextNodeId<distTo[nextNodeId]){
-                    distTo[nextNodeId]=distToNextNodeId;
-                    queue.offer(new State(nextNodeId,distToNextNodeId));
-                }
-            }
-        }
-        return distTo;
-    }
+//    public int[] dijkstra(int start, Graph graph) {
+//        int V = graph.size();
+//        int[] distTo = new int[V];
+//        Arrays.fill(distTo, Integer.MAX_VALUE);
+//        distTo[start] = 0;
+//        Queue<State> queue = new PriorityQueue<>((a, b) -> {
+//            return a.distFromStart - b.distFromStart;
+//        });
+//        queue.offer(new State(start,0));
+//        while(!queue.isEmpty()){
+//            State curState = queue.poll();
+//            int curNodeId = curState.getNodeId();
+//            int curDisFromStart = curState.getDistFromStart();
+//            if (curDisFromStart>distTo[curNodeId]){
+//                continue;
+//            }
+//            for (int nextNodeId: graph.neighbors(curNodeId)){
+//                int distToNextNodeId=curDisFromStart+graph.weight(curNodeId,nextNodeId);
+//                if (distToNextNodeId<distTo[nextNodeId]){
+//                    distTo[nextNodeId]=distToNextNodeId;
+//                    queue.offer(new State(nextNodeId,distToNextNodeId));
+//                }
+//            }
+//        }
+//        return distTo;
+//    }
 
     private class State {
         private int nodeId;
