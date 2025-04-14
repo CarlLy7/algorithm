@@ -74,6 +74,7 @@ public class day20250414Solution {
         int left = 0, right = 0;
         while (right < s.length()) {
             char c = s.charAt(right);
+            // 先加
             right++;
             if (need.containsKey(c)) {
                 window.put(c, window.getOrDefault(c, 0) + 1);
@@ -85,6 +86,7 @@ public class day20250414Solution {
             while (left < right && valid == need.size()) {
                 if (right - left < len) {
                     start = left;
+                    // 因为right是先加的，所以不需要再+1了
                     len = right - left;
                 }
                 char d = s.charAt(left);
