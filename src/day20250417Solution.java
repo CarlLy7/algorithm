@@ -60,11 +60,11 @@ public class day20250417Solution {
      * 构建二叉树并且返回根节点
      * 
      * @param preorder 前序数组
-     * @param preStart 前序数组起始索引
-     * @param preEnd 前序数组结尾索引
+     * @param preStart 前序数组起始索引  闭区间
+     * @param preEnd 前序数组结尾索引  闭区间
      * @param inorder 中序数组
-     * @param inStart 中序数组起始索引
-     * @param inEnd 中序数组结尾索引
+     * @param inStart 中序数组起始索引  闭区间
+     * @param inEnd 中序数组结尾索引  闭区间
      * @return
      */
     private TreeNode build(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
