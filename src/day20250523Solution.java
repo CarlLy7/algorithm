@@ -77,7 +77,8 @@ public class day20250523Solution {
                 for (int j = 0; j < charArray.length; j++) {
                     char orign = charArray[j];
                     for (char k = 'a'; k <= 'z'; k++) {
-                        if (k==orign) continue;
+                        if (k == orign)
+                            continue;
                         charArray[j] = k;
                         String newStr = new String(charArray);
                         if (set.contains(newStr) && !visited.contains(newStr)) {
