@@ -36,7 +36,7 @@ public class day20250704Solution {
         return (char)res;
     }
 
-    // [692] 前K个高频单词
+    // [692] 前K个高频单词。。。。
     public List<String> topKFrequent(String[] words, int k) {
         HashMap<String, Integer> map = new HashMap<>();
         for (String word : words) {
