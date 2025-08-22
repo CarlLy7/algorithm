@@ -192,10 +192,4 @@ public class day20250328Solution {
         }
     }
 
-    public static void main(String[] args) {
-        int[] nums1 = new int[] {2, 2, 4, 4};
-        int[] nums2 = new int[] {2, 2, 2, 4, 4};
-        double result = findMedianSortedArrays(nums1, nums2);
-        System.out.println(result);
-    }
 }
