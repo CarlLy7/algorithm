@@ -59,26 +59,67 @@ public class day20250828Solution {
     }
 
     // [234] 回文链表
+    // public boolean isPalindrome(ListNode head) {
+    // List<Integer> list = new ArrayList<>();
+    // ListNode p = head;
+    // while (p != null) {
+    // list.add(p.val);
+    // p = p.next;
+    // }
+    // int[] res = new int[list.size()];
+    // for (int i = 0; i < list.size(); i++) {
+    // res[i] = list.get(i);
+    // }
+    // int left = 0, right = res.length - 1;
+    // while (left < right) {
+    // if (res[left] != res[right]) {
+    // return false;
+    // }
+    // left++;
+    // right--;
+    // }
+    // return true;
+    // }
+
     public boolean isPalindrome(ListNode head) {
-        List<Integer> list = new ArrayList<>();
-        ListNode p = head;
-        while (p != null) {
-            list.add(p.val);
-            p = p.next;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        int[] res = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            res[i] = list.get(i);
+        if (fast != null) {
+            slow = slow.next;
         }
-        int left = 0, right = res.length - 1;
-        while (left < right) {
-            if (res[left] != res[right]) {
+        ListNode right = reverse(slow);
+        ListNode left = head;
+        while (right != null) {
+            if (left.val != right.val) {
                 return false;
             }
-            left++;
-            right--;
+            left = left.next;
+            right = right.next;
         }
         return true;
+    }
+
+    /**
+     * 反转链表
+     * 
+     * @param head
+     * @return
+     */
+    private ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode nxt = head;
+        while (nxt != null) {
+            nxt = nxt.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        return pre;
     }
 
     private class ListNode {
