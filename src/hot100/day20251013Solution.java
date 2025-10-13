@@ -1,5 +1,7 @@
 package hot100;
 
+import java.util.Arrays;
+
 /**
  * @description:
  * @author: carl
@@ -68,5 +70,37 @@ public class day20251013Solution {
             }
         }
         return dp[nums.length][0];
+    }
+
+    // [3180] 执行操作可获得的最大总奖励 I
+    public int maxTotalReward(int[] rewardValues) {
+        int n = rewardValues.length;
+        Arrays.sort(rewardValues);
+        int maxVal = rewardValues[n - 1];
+        boolean[][] dp = new boolean[n + 1][maxVal * 2];
+        // base case
+        dp[0][0] = true;
+        for (int i = 1; i <= n; i++) {
+            int cur = rewardValues[i - 1];
+            for (int x = 0; x < maxVal * 2; x++) {
+                // 可以放得下
+                if (x >= cur && cur > x - cur) {
+                    // 放
+                    boolean add = dp[i - 1][x - cur];
+                    // 不放
+                    boolean notAdd = dp[i - 1][x];
+                    dp[i][x] = add || notAdd;
+                } else {
+                    // 放不下
+                    dp[i][x] = dp[i - 1][x];
+                }
+            }
+        }
+        for (int i = maxVal * 2 - 1; i >= 0; i--) {
+            if (dp[n][i]) {
+                return i;
+            }
+        }
+        return 0;
     }
 }
