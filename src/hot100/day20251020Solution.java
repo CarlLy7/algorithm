@@ -25,6 +25,7 @@ public class day20251020Solution {
             pq = new TreeSet<>((a, b) -> {
                 int distanceA = distance(a);
                 int distanceB = distance(b);
+                //因为题目说当距离相等的时候，选择索引小的，但是我们下面是通过last()来取得最大值的，所以这里要进行倒序排列，就会得到索引小的
                 if (distanceA == distanceB) {
                     return b[0] - a[0];
                 }
@@ -86,7 +87,7 @@ public class day20251020Solution {
         }
 
         /**
-         * 返回线段的长度
+         * 返回可以选择的最大位置
          * 
          * @param a
          * @return
@@ -94,9 +95,11 @@ public class day20251020Solution {
         private int distance(int[] a) {
             int x = a[0];
             int y = a[1];
+            // 如果当前的开始位置是-1，那么最远肯定是结尾
             if (x == -1) {
                 return y;
             } else if (y == N) {
+                //如果当前位置的结尾是最后，那么可以选择的最远位置就是开头
                 return N - 1 - x;
             } else {
                 // 返回中点到端点的距离
