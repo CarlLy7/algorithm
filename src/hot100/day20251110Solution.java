@@ -74,8 +74,11 @@ public class day20251110Solution {
      * @return
      */
     private int[] getLevelRange(int depth) {
-        int p = (int)Math.pow(2, depth);
-        return new int[] {p, 2 * p - 1};
+//        int p = (int)Math.pow(2, depth);
+//        return new int[] {p, 2 * p - 1};
+        int min= (int) Math.pow(2, depth - 1);
+        int max= (int) (Math.pow(2,depth) - 1);
+        return new int[]{min,max};
     }
 
     /**
@@ -85,7 +88,8 @@ public class day20251110Solution {
      * @return
      */
     private int log(int label) {
-        return (int)(Math.log(label) / Math.log(2));
+//        return (int)(Math.log(label) / Math.log(2));
+        return (int) Math.floor(Math.log(label) / Math.log(2))+1;
     }
 
     private class TreeNode {
