@@ -97,6 +97,23 @@ public class day20251120Solution {
         return new Result(result.node, result.depth + 1);
     }
 
+    // [236] 二叉树的最近公共祖先
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        if (p == root || q == root) {
+            return root;
+        }
+        // 分解问题，去左右子树找
+        TreeNode leftSub = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightSub = lowestCommonAncestor(root.right, p, q);
+        if (leftSub != null && rightSub != null) {
+            return root;
+        }
+        return leftSub != null ? leftSub : rightSub;
+    }
+
     // ************************
     private class TreeNode {
         int val;
