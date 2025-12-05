@@ -1,5 +1,7 @@
 package hot100;
 
+import jdk.nashorn.internal.runtime.JSErrorType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -15,24 +17,53 @@ public class day20251205Solution {
     // 使用栈来模拟二叉树的迭代遍历
 
     // 使用迭代的方法进行二叉树的后序遍历
-    Stack<TreeNode> stack = new Stack<>();
+    // Stack<TreeNode> stack = new Stack<>();
+    //
+    // public List<Integer> postorderTraversal(TreeNode root) {
+    // List<Integer> res = new ArrayList<>();
+    // TreeNode visited = new TreeNode(-1);
+    // pushLeftBranch(root);
+    // while (!stack.isEmpty()) {
+    // TreeNode peek = stack.peek();
+    // // 左子树遍历完了，但是右子树没有遍历
+    // if ((peek.left == null || peek.left == visited) && peek.right != visited) {
+    // // 中序位置
+    // pushLeftBranch(root.right);
+    // }
+    // // 左右子树都遍历完了
+    // if (peek.right == null || peek.right == visited) {
+    // // 后序位置
+    // res.add(peek.val);
+    // visited = stack.pop();
+    // }
+    // }
+    // return res;
+    // }
+    //
+    // private void pushLeftBranch(TreeNode root) {
+    // TreeNode p = root;
+    // while (p != null) {
+    // // 前序位置
+    // stack.push(p);
+    // p = p.left;
+    // }
+    // }
 
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-        TreeNode visited = new TreeNode(-1);
+    // [144] 二叉树的前序遍历
+    Stack<TreeNode> stack = new Stack<>();
+    List<Integer> res = new ArrayList<>();
+
+    public List<Integer> preorderTraversal(TreeNode root) {
         pushLeftBranch(root);
+        TreeNode visited = new TreeNode(-1);
         while (!stack.isEmpty()) {
-            TreeNode peek = stack.peek();
-            // 左子树遍历完了，但是右子树没有遍历
-            if ((peek.left == null || peek.left == visited) && peek.right != visited) {
-                // 中序位置
-                pushLeftBranch(root.right);
+            TreeNode p = stack.peek();
+            if ((p.left == null || p.left == visited) && p.right != visited) {
+                pushLeftBranch(p.right);
             }
-            // 左右子树都遍历完了
-            if (peek.right == null || peek.right == visited) {
-                // 后序位置
-                res.add(peek.val);
-                visited = stack.pop();
+            if (p.right == null || p.right == visited) {
+                visited = p;
+                stack.pop();
             }
         }
         return res;
@@ -42,6 +73,7 @@ public class day20251205Solution {
         TreeNode p = root;
         while (p != null) {
             // 前序位置
+            res.add(p.val);
             stack.push(p);
             p = p.left;
         }
