@@ -41,7 +41,7 @@ public class day20251217Solution {
         int n = matrix[0].length;
         // 1.以对角线为轴进行翻转
         for (int i = 0; i < m; i++) {
-            //注意！！！以对角线翻转的时候，遍历一半就可以了
+            //注意！！！以对角线翻转的时候，遍历一半就可以了,不然就相当于没换了
             for (int j = i; j < n; j++) {
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
