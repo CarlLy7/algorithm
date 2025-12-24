@@ -60,10 +60,12 @@ public class day20251224Solution {
             int[] nums2Max = maxQueue.poll();
             int index = nums2Max[0];
             int maxVal = nums2Max[1];
+            // 如果我最好的能干过你最好的，那么就让我最好的上
             if (nums1[right] > maxVal) {
                 res[index] = nums1[right];
                 right--;
             } else {
+                // 如果我最好的也干不过你最好的，那么就让我最差的上
                 res[index] = nums1[left];
                 left++;
             }
