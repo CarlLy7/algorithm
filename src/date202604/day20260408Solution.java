@@ -1,5 +1,9 @@
 package date202604;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+
 /**
  * @description:
  * @author: carl
@@ -54,6 +58,32 @@ public class day20260408Solution {
             }
         }
         return dummy.next;
+    }
+
+    // [373] 查找和最小的 K 对数字
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        // 优先级队列中存储三元组(nums[i],nums[j],index)
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
+            // 按照元素和从小到大排序
+            return (a[0] + a[1]) - (b[0] + b[1]);
+        });
+        for (int i = 0; i < nums1.length; i++) {
+            queue.offer(new int[] {nums1[i], nums2[0], 0});
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        while (!queue.isEmpty() && k > 0) {
+            int[] cur = queue.poll();
+            k--;
+            int nextIndex = cur[2] + 1;
+            if (nextIndex < nums2.length) {
+                queue.offer(new int[] {cur[0], nums2[nextIndex], nextIndex});
+            }
+            List<Integer> pair = new ArrayList<>();
+            pair.add(cur[0]);
+            pair.add(cur[1]);
+            res.add(pair);
+        }
+        return res;
     }
 
     private class ListNode {
